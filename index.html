@@ -1,0 +1,1097 @@
+<html>
+  <body>
+    <div style="font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f7fa;">
+  <header style="text-align: center; margin-bottom: 30px;">
+    <h1 style="color: #2d3748; margin: 0;">POKE Chain Control Interface</h1>
+    <p style="color: #4a5568;">Decentralized blockchain for the POKE ecosystem</p>
+  </header>
+
+  <main style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 30px;">
+    <!-- Blockchain Status Panel -->
+    <section style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <h2 style="color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Chain Status</h2>
+      
+      <div style="margin: 20px 0;">
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="font-weight: bold;">Chain ID</span>
+          <span style="color: #3182ce; font-family: monospace;">POKE-777</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="font-weight: bold;">Block Height</span>
+          <span id="blockHeightEl" style="color: #3182ce;">12</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="font-weight: bold;">Last Block Hash</span>
+          <span id="lastHashEl" style="color: #3182ce; font-family: monospace; font-size: 0.85rem;">0x2f7a...3d9c</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="font-weight: bold;">Network Status</span>
+          <span style="color: #38a169; font-weight: bold;">Active</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="font-weight: bold;">Validation Status</span>
+          <span id="chainValidationEl" style="color: #d69e2e; font-weight: bold;">Pending</span>
+        </div>
+      </div>
+      
+      <div style="background: #edf2f7; padding: 15px; border-radius: 8px; margin-top: 20px;">
+        <h3 style="margin-top: 0; color: #2d3748;">Metamask Integration</h3>
+        <p style="margin-bottom: 10px; font-size: 0.9rem;">Add POKE Chain to Metamask:</p>
+        <button onclick="addChainToMetaMask()" style="background: #667eea; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-bottom: 10px;">
+          Add POKE Chain to Metamask
+        </button>
+        <div id="addChainStatusEl" style="margin-top: 10px; padding: 10px; border-radius: 6px; display: none;"></div>
+        <div style="background: #f7fafc; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+          <p style="margin: 0; font-weight: bold; color: #2d3748;">Chain ID</p>
+          <code style="color: #3182ce; font-size: 0.85rem;">0x309</code>
+        </div>
+        <div style="background: #f7fafc; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+          <p style="margin: 0; font-weight: bold; color: #2d3748;">RPC URL</p>
+          <code style="color: #3182ce; font-size: 0.85rem;">https://mainnet.pokechain.io</code>
+        </div>
+        <div style="background: #f7fafc; padding: 10px; border-radius: 6px;">
+          <p style="margin: 0; font-weight: bold; color: #2d3748;">Block Explorer</p>
+          <code style="color: #3182ce; font-size: 0.85rem;">https://explorer.pokechain.io</code>
+        </div>
+      </div>
+      
+      <div style="background: #edf2f7; padding: 15px; border-radius: 8px; margin-top: 20px;">
+        <h3 style="margin-top: 0; color: #2d3748;">Chain Validation Proof</h3>
+        <div style="background: #f7fafc; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+          <p style="margin: 0; font-weight: bold; color: #2d3748;">Chain Merkle Root</p>
+          <code id="chainMerkleRootEl" style="color: #3182ce; font-size: 0.85rem; word-break: break-all;">0x7a3b...9c2d</code>
+        </div>
+        <div style="background: #f7fafc; padding: 10px; border-radius: 6px;">
+          <p style="margin: 0; font-weight: bold; color: #2d3748;">Signature</p>
+          <code id="chainSignatureEl" style="color: #3182ce; font-size: 0.85rem; word-break: break-all;">0x1f4a...8b3c</code>
+        </div>
+      </div>
+      
+      <div style="background: #edf2f7; padding: 15px; border-radius: 8px; margin-top: 20px;">
+        <h3 style="margin-top: 0; color: #2d3748;">API Endpoints</h3>
+        <p style="margin-bottom: 10px; font-size: 0.9rem;">For developers:</p>
+        <ul style="padding-left: 20px; font-size: 0.85rem; color: #4a5568;">
+          <li>Chain data: <code style="color: #3182ce;">/api/v1/chain</code></li>
+          <li>Blocks: <code style="color: #3182ce;">/api/v1/blocks</code></li>
+          <li>Transactions: <code style="color: #3182ce;">/api/v1/tx</code></li>
+          <li>Token info: <code style="color: #3182ce;">/api/v1/token/PKI</code></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Token Management Panel -->
+    <section style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <h2 style="color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">PKI Token Management</h2>
+      
+      <div style="display: flex; align-items: center; margin: 20px 0;">
+        <!-- Updated token icon with vinyl graphic -->
+        <img id="tokenIconImgEl" src="https://placehold.co/50x50/000000/FFFFFF?text=PKI" alt="PKI Token" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 15px; object-fit: cover;">
+        <div>
+          <h3 style="margin: 0; color: #2d3748;">PKI Token</h3>
+          <p style="margin: 0; color: #718096; font-size: 0.9rem;">POKE Chain Native Token</p>
+          <p id="tokenValidationEl" style="margin: 5px 0 0 0; color: #d69e2e; font-size: 0.8rem; font-weight: bold;">● Validation Pending</p>
+        </div>
+      </div>
+      
+      <div style="margin: 20px 0;">
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="font-weight: bold;">Contract Address</span>
+          <code style="color: #3182ce; font-size: 0.85rem; cursor: pointer;" onclick="copyToClipboard('tokenContractAddress')">0x7c2a...4e8f</code>
+          <input type="hidden" id="tokenContractAddress" value="0x7c2a...4e8f">
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="font-weight: bold;">Token Decimal</span>
+          <span style="color: #3182ce; font-family: monospace;">18</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="font-weight: bold;">Total Supply</span>
+          <span id="totalSupplyEl" style="color: #3182ce; font-family: monospace;">1,000,000,000 PKI</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="font-weight: bold;">Circulating Supply</span>
+          <span id="circulatingEl" style="color: #3182ce; font-family: monospace;">350,000,000 PKI</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="font-weight: bold;">Holders</span>
+          <span id="holdersEl" style="color: #3182ce;">12,487</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+          <span style="font-weight: bold;">Tx Volume (24h)</span>
+          <span id="volumeEl" style="color: #3182ce; font-family: monospace;">24,589,312 PKI</span>
+        </div>
+      </div>
+      
+      <div style="background: #edf2f7; padding: 15px; border-radius: 8px; margin-top: 20px;">
+        <h3 style="margin-top: 0; color: #2d3748;">Metamask Integration</h3>
+        <p style="margin-bottom: 15px; font-size: 0.9rem;">Add PKI token to Metamask</p>
+        <button onclick="addTokenToMetaMask()" style="background: #667eea; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%;">
+          Add PKI Token to Metamask
+        </button>
+        <div id="metamaskStatusEl" style="margin-top: 15px; padding: 10px; border-radius: 6px; display: none;"></div>
+      </div>
+
+      <div style="background: #edf2f7; padding: 15px; border-radius: 8px; margin-top: 20px;">
+        <h3 style="margin-top: 0; color: #2d3748;">Token Validation Proof</h3>
+        <div style="background: #f7fafc; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+          <p style="margin: 0; font-weight: bold; color: #2d3748;">Contract Verification</p>
+          <code id="tokenVerificationEl" style="color: #3182ce; font-size: 0.85rem; word-break: break-all;">Not Verified</code>
+        </div>
+        <div style="background: #f7fafc; padding: 10px; border-radius: 6px;">
+          <p style="margin: 0; font-weight: bold; color: #2d3748;">Signature</p>
+          <code id="tokenSignatureEl" style="color: #3182ce; font-size: 0.85rem; word-break: break-all;">0x5b2c...7e9a</code>
+        </div>
+      </div>
+      
+      <div style="background: #edf2f7; padding: 15px; border-radius: 8px; margin-top: 20px;">
+        <h3 style="margin-top: 0; color: #2d3748;">Token Details</h3>
+        <p style="margin-bottom: 10px; font-size: 0.9rem;">For manual MetaMask addition:</p>
+        <div style="background: #f7fafc; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+          <p style="margin: 0; font-weight: bold; color: #2d3748;">Token Contract Address</p>
+          <code style="color: #3182ce; font-size: 0.85rem; word-break: break-all;">0x7c2a...4e8f</code>
+        </div>
+        <div style="background: #f7fafc; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+          <p style="margin: 0; font-weight: bold; color: #2d3748;">Token Symbol</p>
+          <code style="color: #3182ce; font-size: 0.85rem;">PKI</code>
+        </div>
+        <div style="background: #f7fafc; padding: 10px; border-radius: 6px;">
+          <p style="margin: 0; font-weight: bold; color: #2d3748;">Token Decimals</p>
+          <code style="color: #3182ce; font-size: 0.85rem;">18</code>
+        </div>
+      </div>
+      
+      <div style="background: #edf2f7; padding: 15px; border-radius: 8px; margin-top: 20px;">
+        <h3 style="margin-top: 0; color: #2d3748;">Token Distribution</h3>
+        <div style="margin: 15px 0;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 0.9rem;">Team & Advisors</span>
+            <span style="color: #3182ce; font-weight: bold;">20%</span>
+          </div>
+          <div style="height: 8px; background: #cbd5e0; border-radius: 4px;">
+            <div style="width: 20%; height: 100%; background: #667eea; border-radius: 4px;"></div>
+          </div>
+        </div>
+        
+        <div style="margin: 15px 0;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 0.9rem;">Ecosystem Fund</span>
+            <span style="color: #3182ce; font-weight: bold;">30%</span>
+          </div>
+          <div style="height: 8px; background: #cbd5e0; border-radius: 4px;">
+            <div style="width: 30%; height: 100%; background: #48bb78; border-radius: 4px;"></div>
+          </div>
+        </div>
+        
+        <div style="margin: 15px 0;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 0.9rem;">Public Sale</span>
+            <span style="color: #3182ce; font-weight: bold;">50%</span>
+          </div>
+          <div style="height: 8px; background: #cbd5e0; border-radius: 4px;">
+            <div style="width: 50%; height: 100%; background: #ed8936; border-radius: 4px;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cross-Chain Bridge Panel -->
+    <section style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <h2 style="color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Cross-Chain Bridge</h2>
+      
+      <div style="margin: 20px 0;">
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2d3748;">Source Chain</label>
+        <select id="sourceChainEl" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; margin-bottom: 15px;">
+          <option value="poke">POKE Chain</option>
+          <option value="ethereum">Ethereum</option>
+          <option value="polygon">Polygon</option>
+          <option value="bnb">BNB Chain</option>
+          <option value="solana">Solana</option>
+        </select>
+        
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2d3748;">Destination Chain</label>
+        <select id="destChainEl" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; margin-bottom: 15px;">
+          <option value="ethereum">Ethereum</option>
+          <option value="polygon">Polygon</option>
+          <option value="bnb">BNB Chain</option>
+          <option value="solana">Solana</option>
+          <option value="poke">POKE Chain</option>
+        </select>
+        
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2d3748;">Token</label>
+        <select id="bridgeTokenEl" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; margin-bottom: 15px;">
+          <option value="PKI">PKI</option>
+          <option value="ETH">ETH</option>
+          <option value="MATIC">MATIC</option>
+          <option value="BNB">BNB</option>
+          <option value="SOL">SOL</option>
+          <option value="USDC">USDC</option>
+          <option value="USDT">USDT</option>
+        </select>
+        
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2d3748;">Amount</label>
+        <input id="bridgeAmountEl" type="number" placeholder="0.0" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; margin-bottom: 15px;">
+        
+        <button onclick="bridgeTokens()" style="background: #4299e1; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%;">
+          Bridge Tokens
+        </button>
+      </div>
+      
+      <div id="bridgeStatusEl" style="margin-top: 20px; background: #edf2f7; padding: 15px; border-radius: 8px; display: none;">
+        <p style="margin: 0; color: #4a5568;">Bridge status will appear here</p>
+      </div>
+    </section>
+
+    <!-- API Explorer -->
+    <section id="apiExplorerEl" style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <h2 style="color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">API Explorer</h2>
+      
+      <div style="margin: 20px 0;">
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2d3748;">Select Endpoint</label>
+        <select id="endpointSelectEl" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; margin-bottom: 15px;">
+          <option value="/api/v1/chain">Chain Status</option>
+          <option value="/api/v1/blocks">Blocks</option>
+          <option value="/api/v1/tx">Transactions</option>
+          <option value="/api/v1/token/PKI">Token Info (PKI)</option>
+          <option value="/api/v1/bridge/chains">Supported Chains</option>
+          <option value="/api/v1/bridge/tokens">Supported Tokens</option>
+          <option value="/api/v1/bridge/quote">Bridge Quote</option>
+          <option value="/api/v1/faucet/send">Faucet API</option>
+        </select>
+        
+        <button onclick="fetchApiData()" style="background: #4299e1; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%;">
+          Fetch Data
+        </button>
+      </div>
+      
+      <div id="apiResponseEl" style="margin-top: 20px; background: #edf2f7; padding: 15px; border-radius: 8px; font-family: monospace; white-space: pre-wrap; word-break: break-all; display: none;">
+        <p style="margin: 0; color: #4a5568;">Select an endpoint and click "Fetch Data" to see the API response</p>
+      </div>
+    </section>
+    
+    <!-- Control Actions Panel -->
+    <section style="grid-column: span 4; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <h2 style="color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Chain Controls</h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+        <button onclick="mineNewBlock()" style="background: #4299e1; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+          Mine New Block
+        </button>
+        
+        <button onclick="validateChain()" style="background: #48bb78; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+          Validate Chain
+        </button>
+        
+        <button onclick="validateToken()" style="background: #9f7aea; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+          Validate Token
+        </button>
+        
+        <button onclick="apiKeyModalEl.style.display = 'flex'" style="background: #9f7aea; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+          API Keys
+        </button>
+        
+        <button onclick="deployPKIToken()" style="background: #ed8936; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+          Deploy PKI Token
+        </button>
+      </div>
+      
+      <div style="margin-top: 30px;">
+        <h3 style="color: #2d3748;">Recent Transactions</h3>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+            <thead>
+              <tr style="background: #edf2f7;">
+                <th style="padding: 12px; text-align: left; font-weight: normal; color: #4a5568;">TX ID</th>
+                <th style="padding: 12px; text-align: left; font-weight: normal; color: #4a5568;">From</th>
+                <th style="padding: 12px; text-align: left; font-weight: normal; color: #4a5568;">To</th>
+                <th style="padding: 12px; text-align: left; font-weight: normal; color: #4a5568;">Amount</th>
+                <th style="padding: 12px; text-align: left; font-weight: normal; color: #4a5568;">Status</th>
+              </tr>
+            </thead>
+            <tbody id="transactionsEl">
+              <!-- Transactions will be added here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin Faucet Panel -->
+    <section style="grid-column: span 4; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <h2 style="color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Admin Token Faucet</h2>
+      
+      <div style="margin: 20px 0;">
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2d3748;">Token</label>
+        <select id="faucetTokenEl" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; margin-bottom: 15px;">
+          <option value="PKI">PKI Token</option>
+        </select>
+        
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2d3748;">Amount</label>
+        <input id="faucetAmountEl" type="number" placeholder="0" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; margin-bottom: 15px;">
+        
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2d3748;">Recipient Address</label>
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+          <input id="faucetAddressEl" type="text" placeholder="0x..." style="flex: 1; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px;">
+          <button onclick="generateRandomAddress()" style="padding: 10px 15px; background: #718096; color: white; border: none; border-radius: 6px; cursor: pointer;">Random</button>
+        </div>
+        
+        <button onclick="sendFromFaucet()" style="background: #38a169; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%;">
+          Send Tokens
+        </button>
+      </div>
+      
+      <div id="faucetStatusEl" style="margin-top: 20px; background: #edf2f7; padding: 15px; border-radius: 8px; display: none;">
+        <p style="margin: 0; color: #4a5568;">Faucet transaction status will appear here</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- API Key Modal -->
+  <div id="apiKeyModalEl" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000;">
+    <div style="background: white; padding: 25px; border-radius: 12px; max-width: 500px; width: 90%;">
+      <h3 style="margin-top: 0; color: #2d3748;">Generate API Key</h3>
+      <p style="color: #4a5568;">Generate a new API key for accessing POKE Chain endpoints</p>
+      
+      <div style="margin: 20px 0;">
+        <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #2d3748;">Key Name</label>
+        <input id="apiKeyNameEl" type="text" style="width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 6px;" placeholder="e.g., Wallet App">
+      </div>
+      
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button onclick="apiKeyModalEl.style.display = 'none'" style="padding: 10px 15px; background: #e2e8f0; border: none; border-radius: 6px; cursor: pointer;">
+          Cancel
+        </button>
+        <button onclick="generateApiKey()" style="padding: 10px 15px; background: #4299e1; color: white; border: none; border-radius: 6px; cursor: pointer;">
+          Generate Key
+        </button>
+      </div>
+      
+      <div id="apiKeyResultEl" style="margin-top: 20px; display: none; background: #f0fff4; padding: 15px; border-radius: 8px; border-left: 4px solid #38a169;">
+        <p style="margin: 0; font-weight: bold; color: #2d3748;">Your New API Key</p>
+        <code id="apiKeyValueEl" style="display: block; background: #edf2f7; padding: 8px; margin: 10px 0; border-radius: 4px; font-family: monospace; word-break: break-all;"></code>
+        <p style="margin: 0; font-size: 0.9rem; color: #4a5568;">Save this key securely - it cannot be recovered</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastEl" style="position: fixed; bottom: 20px; right: 20px; background: #2d3748; color: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: none; z-index: 1000;">
+    <span id="toastMessageEl"></span>
+  </div>
+
+  <script>
+    // Generate a valid Ethereum-style contract address
+    function generateContractAddress() {
+      return '0x' + Array.from({length: 40}, () => Math.floor(Math.random()*16).toString(16)).join('');
+    }
+
+    // Generate a random hash for proofs
+    function generateRandomHash() {
+      return '0x' + Array.from({length: 64}, () => Math.floor(Math.random()*16).toString(16)).join('');
+    }
+
+    // Chain state and API simulation - Updated with valid POKE Chain network
+    const blockchainState = {
+      chainId: 'POKE-777', // Compatible POKE Chain ID
+      blockHeight: 12,
+      lastBlockHash: '0x2f7a...3d9c',
+      networkStatus: 'Active',
+      isValid: false,
+      merkleRoot: generateRandomHash(),
+      signature: generateRandomHash(),
+      rpcUrl: 'https://mainnet.pokechain.io',
+      blockExplorerUrl: 'https://explorer.pokechain.io',
+      chainIdHex: '0x309' // 777 in hex
+    };
+
+    const tokenState = {
+      contractAddress: generateContractAddress(), // Generated valid contract address
+      decimals: 18,
+      totalSupply: '1,000,000,000 PKI',
+      circulatingSupply: '350,000,000 PKI',
+      holders: 12487,
+      volume24h: '24,589,312 PKI',
+      imageUrl: '', // Will be populated when token icon is generated
+      isValid: false,
+      signature: generateRandomHash(),
+      verificationStatus: 'Not Verified',
+      name: 'POKE Chain Native Token',
+      symbol: 'PKI'
+    };
+
+    const transactionsList = [
+      { id: '0x4f8a...2d9e', from: '0x742d...1a3c', to: '0x9b21...7f2e', amount: '1,500 PKI', status: 'Confirmed' },
+      { id: '0x1b3c...8e4d', from: '0x3a5d...9c2a', to: '0x6d8f...3b1c', amount: '750 PKI', status: 'Pending' },
+      { id: '0x7e2a...5f1b', from: '0x9c21...2d4e', to: '0x4a7f...8d3c', amount: '3,200 PKI', status: 'Confirmed' },
+      { id: '0x3c9e...6a7d', from: '0x2b1f...9e4a', to: '0x5d8c...1f2b', amount: '500 PKI', status: 'Failed' }
+    ];
+
+    // Supported chains for bridge
+    const supportedChains = [
+      { id: 'poke', name: 'POKE Chain', icon: 'https://placehold.co/30x30?text=PK' },
+      { id: 'ethereum', name: 'Ethereum', icon: 'https://placehold.co/30x30?text=ETH' },
+      { id: 'polygon', name: 'Polygon', icon: 'https://placehold.co/30x30?text=MATIC' },
+      { id: 'bnb', name: 'BNB Chain', icon: 'https://placehold.co/30x30?text=BNB' },
+      { id: 'solana', name: 'Solana', icon: 'https://placehold.co/30x30?text=SOL' }
+    ];
+
+    // Supported tokens for bridge
+    const supportedTokens = [
+      { symbol: 'PKI', name: 'PKI Token', chains: ['poke', 'ethereum', 'polygon', 'bnb'] },
+      { symbol: 'ETH', name: 'Ethereum', chains: ['ethereum', 'polygon', 'bnb'] },
+      { symbol: 'MATIC', name: 'Polygon', chains: ['polygon'] },
+      { symbol: 'BNB', name: 'BNB', chains: ['bnb'] },
+      { symbol: 'SOL', name: 'Solana', chains: ['solana'] },
+      { symbol: 'USDC', name: 'USD Coin', chains: ['ethereum', 'polygon', 'bnb', 'solana'] },
+      { symbol: 'USDT', name: 'Tether', chains: ['ethereum', 'polygon', 'bnb', 'solana'] }
+    ];
+
+    // Simulated API endpoints - Fixed to return token details including contract address
+    const apiSimulation = {
+      '/api/v1/chain': () => ({
+        chainId: blockchainState.chainId,
+        chainIdHex: blockchainState.chainIdHex,
+        blockHeight: blockchainState.blockHeight,
+        lastBlockHash: blockchainState.lastBlockHash,
+        networkStatus: blockchainState.networkStatus,
+        isValid: blockchainState.isValid,
+        merkleRoot: blockchainState.merkleRoot,
+        signature: blockchainState.signature,
+        rpcUrl: blockchainState.rpcUrl,
+        blockExplorerUrl: blockchainState.blockExplorerUrl
+      }),
+      '/api/v1/blocks': () => ({ blocks: transactionsList.map((tx, i) => ({ id: i + 1, hash: `0x${Math.random().toString(16).substring(2)}`, txCount: 3 })) }),
+      '/api/v1/tx': () => ({ transactions: transactionsList }),
+      '/api/v1/token/PKI': () => ({ 
+        symbol: tokenState.symbol,
+        name: tokenState.name,
+        contractAddress: tokenState.contractAddress, // Ensure full address is returned
+        decimals: tokenState.decimals,
+        totalSupply: tokenState.totalSupply,
+        circulatingSupply: tokenState.circulatingSupply,
+        holders: tokenState.holders,
+        volume24h: tokenState.volume24h,
+        imageUrl: tokenState.imageUrl,
+        isValid: tokenState.isValid,
+        signature: tokenState.signature,
+        verificationStatus: tokenState.verificationStatus
+      }),
+      '/api/v1/bridge/chains': () => ({ chains: supportedChains }),
+      '/api/v1/bridge/tokens': () => ({ tokens: supportedTokens }),
+      '/api/v1/bridge/quote': () => ({
+        fromChain: sourceChainEl.value,
+        toChain: destChainEl.value,
+        token: bridgeTokenEl.value,
+        amount: bridgeAmountEl.value,
+        estimatedGas: '0.001 ETH',
+        estimatedTime: '2-5 minutes',
+        exchangeRate: '1.0'
+      }),
+      '/api/v1/faucet/send': () => ({
+        token: faucetTokenEl.value,
+        amount: faucetAmountEl.value,
+        recipient: faucetAddressEl.value,
+        status: 'success',
+        txHash: '0x' + Math.random().toString(16).substring(2, 10) + '...'
+      })
+    };
+
+    // Initialize transactions table
+    function renderTransactions() {
+      transactionsEl.innerHTML = '';
+      transactionsList.forEach(tx => {
+        const row = document.createElement('tr');
+        
+        let statusColor = '';
+        if (tx.status === 'Confirmed') {
+          statusColor = '#38a169';
+        } else if (tx.status === 'Pending') {
+          statusColor = '#d69e2e';
+        } else {
+          statusColor = '#e53e3e';
+        }
+        
+        row.innerHTML = `
+          <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${tx.id}</td>
+          <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${tx.from}</td>
+          <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${tx.to}</td>
+          <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #3182ce; font-weight: bold;">${tx.amount}</td>
+          <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: ${statusColor};">${tx.status}</td>
+        `;
+        transactionsEl.appendChild(row);
+      });
+    }
+
+    // Generate PKI token icon with vinyl graphic
+    async function generateTokenIcon() {
+      tokenIconImgEl.src = "https://placehold.co/50x50/000000/FFFFFF?text=..."; // Loading placeholder
+      try {
+        // Generate vinyl graphic with PKI text using the global generateImage function
+        const dataUrl = await root.generateImage("vintage vinyl record graphic with grooves, centered, with 'PKI' written in bold white circular text, retro style with musical notes, vibrant purple and gold colors, detailed circular design");
+        
+        if (dataUrl && typeof dataUrl === 'string') {
+          tokenIconImgEl.src = dataUrl;
+          tokenState.imageUrl = dataUrl; // Store in token state for MetaMask
+        } else {
+          throw new Error("Invalid data URL returned from generateImage");
+        }
+      } catch (error) {
+        console.error("Error generating token icon:", error);
+        // Fallback to placeholder if generation fails
+        tokenIconImgEl.src = "https://placehold.co/50x50/000000/FFFFFF?text=PKI";
+        tokenState.imageUrl = ""; // Clear any previous image URL
+      }
+    }
+
+    // Add chain to MetaMask - Updated with valid POKE Chain parameters
+    function addChainToMetaMask() {
+      if (typeof window.ethereum !== 'undefined') {
+        const chainId = blockchainState.chainIdHex; // Use valid hex chain ID
+        const chainName = blockchainState.chainId; // Use chain name from state
+        const rpcUrls = [blockchainState.rpcUrl]; // Use valid RPC URL
+        const blockExplorerUrls = [blockchainState.blockExplorerUrl]; // Use valid explorer URL
+        const nativeCurrency = {
+          name: 'PKI', // Native token name
+          symbol: 'PKI', // Native token symbol
+          decimals: 18
+        };
+        
+        const params = [{
+          chainId: chainId,
+          chainName: chainName,
+          nativeCurrency: nativeCurrency,
+          rpcUrls: rpcUrls,
+          blockExplorerUrls: blockExplorerUrls
+        }];
+        
+        window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: params,
+        })
+        .then((success) => {
+          showAddChainStatus('POKE Chain added successfully!', 'success');
+        })
+        .catch((error) => {
+          console.error('Error adding chain to MetaMask:', error);
+          showAddChainStatus('Error adding chain: ' + error.message, 'error');
+        });
+      } else {
+        showAddChainStatus('MetaMask is not installed. Please install MetaMask and try again.', 'error');
+      }
+    }
+
+    // Show add chain status message
+    function showAddChainStatus(message, type) {
+      const statusEl = addChainStatusEl;
+      statusEl.style.display = 'block';
+      statusEl.textContent = message;
+      
+      if (type === 'success') {
+        statusEl.style.backgroundColor = '#c6f6d5';
+        statusEl.style.color = '#276749';
+      } else {
+        statusEl.style.backgroundColor = '#fed7d7';
+        statusEl.style.color = '#9b2c2c';
+      }
+
+      // Hide after 5 seconds
+      setTimeout(() => {
+        statusEl.style.display = 'none';
+      }, 5000);
+    }
+
+    // Copy to clipboard function - Fixed for hidden inputs
+    function copyToClipboard(inputId) {
+      const input = document.getElementById(inputId);
+      const textToCopy = input.value;
+      
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        showToast('Copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
+        showToast('Failed to copy to clipboard');
+      });
+    }
+
+    // Initialize UI with state data
+    async function initializeUI() {
+      // Set initial blockchain state
+      blockHeightEl.textContent = blockchainState.blockHeight;
+      lastHashEl.textContent = blockchainState.lastBlockHash;
+      
+      // Set validation proofs
+      chainMerkleRootEl.textContent = blockchainState.merkleRoot.substring(0, 6) + '...' + blockchainState.merkleRoot.substring(58);
+      chainSignatureEl.textContent = blockchainState.signature.substring(0, 6) + '...' + blockchainState.signature.substring(58);
+      
+      // Set initial token state
+      totalSupplyEl.textContent = tokenState.totalSupply;
+      circulatingEl.textContent = tokenState.circulatingSupply;
+      holdersEl.textContent = tokenState.holders.toLocaleString();
+      volumeEl.textContent = tokenState.volume24h;
+      
+      // Set token contract address - use shortened version for display
+      const shortAddress = tokenState.contractAddress.substring(0, 6) + '...' + tokenState.contractAddress.substring(38);
+      tokenContractAddress.value = tokenState.contractAddress;
+      document.querySelector('code[onclick="copyToClipboard(\'tokenContractAddress\')"]').textContent = shortAddress;
+      
+      // Set token validation proofs
+      tokenSignatureEl.textContent = tokenState.signature.substring(0, 6) + '...' + tokenState.signature.substring(58);
+      tokenVerificationEl.textContent = tokenState.verificationStatus;
+      
+      // Update validation status display
+      updateValidationStatus();
+      
+      // Render transactions
+      renderTransactions();
+      
+      // Generate token icon
+      await generateTokenIcon();
+    }
+
+    // Update validation status display
+    function updateValidationStatus() {
+      // Chain validation
+      if (blockchainState.isValid) {
+        chainValidationEl.textContent = 'Valid';
+        chainValidationEl.style.color = '#38a169';
+      } else {
+        chainValidationEl.textContent = 'Pending';
+        chainValidationEl.style.color = '#d69e2e';
+      }
+      
+      // Token validation
+      const tokenValidationEl = document.getElementById('tokenValidationEl');
+      if (tokenState.isValid) {
+        tokenValidationEl.textContent = '● Valid';
+        tokenValidationEl.style.color = '#38a169';
+        tokenVerificationEl.textContent = 'Verified';
+        tokenVerificationEl.style.color = '#38a169';
+      } else {
+        tokenValidationEl.textContent = '● Validation Pending';
+        tokenValidationEl.style.color = '#d69e2e';
+      }
+    }
+
+    // Generate random address for faucet
+    function generateRandomAddress() {
+      // Generate a random Ethereum-like address (40 char hex string after 0x)
+      let address = '0x' + Array.from({length: 40}, () => Math.floor(Math.random()*16).toString(16)).join('');
+      faucetAddressEl.value = address;
+    }
+
+    // Send tokens from faucet
+    function sendFromFaucet() {
+      const amount = faucetAmountEl.value;
+      const address = faucetAddressEl.value;
+
+      if (!amount || amount <= 0) {
+        showToast('Please enter a valid amount');
+        return;
+      }
+
+      if (!address || !/^0x[a-fA-F0-9]{40}$/.test(address)) {
+        showToast('Please enter a valid address');
+        return;
+      }
+
+      // Show status
+      const statusEl = faucetStatusEl;
+      statusEl.style.display = 'block';
+      statusEl.innerHTML = `
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #2d3748;">Faucet Transaction Initiated</p>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span>To:</span>
+          <span style="font-family: monospace;">${address}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span>Amount:</span>
+          <span>${amount} PKI</span>
+        </div>
+        <div style="margin-top: 15px; padding: 10px; background: #bee3f8; border-radius: 6px;">
+          <p style="margin: 0; color: #2c5282;">Processing faucet transaction...</p>
+        </div>
+      `;
+
+      // Simulate processing
+      setTimeout(() => {
+        const success = Math.random() > 0.2; // 80% success
+        if (success) {
+          statusEl.innerHTML = `
+            <p style="margin: 0 0 10px 0; font-weight: bold; color: #2d3748;">Faucet Transaction Completed</p>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span>Transaction ID:</span>
+              <span style="font-family: monospace;">0x${Math.random().toString(16).substring(2, 10)}...</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span>Status:</span>
+              <span style="color: #38a169; font-weight: bold;">Completed</span>
+            </div>
+            <div style="margin-top: 15px; padding: 10px; background: #c6f6d5; border-radius: 6px;">
+              <p style="margin: 0; color: #276749;">Successfully sent ${amount} PKI to ${address}</p>
+            </div>
+          `;
+
+          // Add to transactions
+          const newTx = {
+            id: '0x' + Math.random().toString(16).substring(2, 8) + '...2d9e',
+            from: '0xFAUCET',
+            to: address,
+            amount: `${amount} PKI`,
+            status: 'Confirmed'
+          };
+          transactionsList.unshift(newTx);
+          renderTransactions();
+
+          showToast('Faucet transaction completed successfully');
+        } else {
+          statusEl.innerHTML = `
+            <p style="margin: 0 0 10px 0; font-weight: bold; color: #2d3748;">Faucet Transaction Failed</p>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span>Status:</span>
+              <span style="color: #e53e3e; font-weight: bold;">Failed</span>
+            </div>
+            <div style="margin-top: 15px; padding: 10px; background: #fed7d7; border-radius: 6px;">
+              <p style="margin: 0; color: #9b2c2c;">Faucet transaction failed. Please try again.</p>
+            </div>
+          `;
+          showToast('Faucet transaction failed');
+        }
+      }, 2000);
+    }
+
+    // Add token to MetaMask - Enhanced with image support
+    function addTokenToMetaMask() {
+      if (typeof window.ethereum !== 'undefined') {
+        const tokenAddress = tokenState.contractAddress;
+        const tokenSymbol = tokenState.symbol;
+        const tokenDecimals = tokenState.decimals;
+        const tokenImage = tokenState.imageUrl || undefined; // Only include if available
+        
+        const params = {
+          type: 'ERC20',
+          options: {
+            address: tokenAddress,
+            symbol: tokenSymbol,
+            decimals: tokenDecimals,
+          },
+        };
+        
+        // Add image if available
+        if (tokenImage) {
+          params.options.image = tokenImage;
+        }
+        
+        window.ethereum.request({
+          method: 'wallet_watchAsset',
+          params: params,
+        })
+        .then((success) => {
+          if (success) {
+            showMetaMaskStatus('PKI token added successfully!', 'success');
+          } else {
+            showMetaMaskStatus('Token addition was rejected by user', 'error');
+          }
+        })
+        .catch((error) => {
+          console.error('Error adding token to MetaMask:', error);
+          showMetaMaskStatus('Error adding token: ' + error.message, 'error');
+        });
+      } else {
+        showMetaMaskStatus('MetaMask is not installed. Please install MetaMask and try again.', 'error');
+      }
+    }
+
+    // Show MetaMask status message
+    function showMetaMaskStatus(message, type) {
+      const statusEl = metamaskStatusEl;
+      statusEl.style.display = 'block';
+      statusEl.textContent = message;
+      
+      if (type === 'success') {
+        statusEl.style.backgroundColor = '#c6f6d5';
+        statusEl.style.color = '#276749';
+      } else {
+        statusEl.style.backgroundColor = '#fed7d7';
+        statusEl.style.color = '#9b2c2c';
+      }
+
+      // Hide after 5 seconds
+      setTimeout(() => {
+        statusEl.style.display = 'none';
+      }, 5000);
+    }
+
+    // Fetch API data for explorer
+    function fetchApiData() {
+      const endpoint = endpointSelectEl.value;
+      const responseEl = apiResponseEl;
+      
+      if (apiSimulation[endpoint]) {
+        const data = apiSimulation[endpoint]();
+        responseEl.innerHTML = `<p style="margin: 0 0 10px 0; font-weight: bold;">Response: ${endpoint}</p>
+                                <pre style="margin: 0; background: #f7fafc; padding: 10px; border-radius: 4px; overflow-x: auto;">${JSON.stringify(data, null, 2)}</pre>`;
+        responseEl.style.display = 'block';
+        showToast('API data fetched successfully');
+      } else {
+        responseEl.innerHTML = '<p style="margin: 0; color: #e53e3e;">Error: Endpoint not found</p>';
+        responseEl.style.display = 'block';
+      }
+    }
+
+    // Mine new block function
+    function mineNewBlock() {
+      // Update blockchain state
+      blockchainState.blockHeight += 1;
+      blockchainState.lastBlockHash = '0x' + Math.random().toString(16).substring(2, 10) + '...';
+      
+      // Add new transaction to list (mining reward)
+      const newTx = {
+        id: '0x' + Math.random().toString(16).substring(2, 8) + '...2d9e',
+        from: '0xCOINBASE',
+        to: '0xMINER',
+        amount: '50 PKI',
+        status: 'Confirmed'
+      };
+      transactionsList.unshift(newTx);
+      
+      // Update UI
+      blockHeightEl.textContent = blockchainState.blockHeight;
+      lastHashEl.textContent = blockchainState.lastBlockHash;
+      renderTransactions();
+      
+      showToast('New block mined successfully');
+    }
+
+    // Validate chain function - Enhanced with proof generation
+    function validateChain() {
+      // Simulate validation delay
+      showToast('Validating chain...');
+      chainValidationEl.textContent = 'Validating...';
+      chainValidationEl.style.color = '#d69e2e';
+      
+      setTimeout(() => {
+        const isValid = Math.random() > 0.1; // 90% chance of being valid
+        blockchainState.isValid = isValid;
+        
+        // Update merkle root and signature
+        blockchainState.merkleRoot = generateRandomHash();
+        blockchainState.signature = generateRandomHash();
+        
+        // Update UI
+        chainMerkleRootEl.textContent = blockchainState.merkleRoot.substring(0, 6) + '...' + blockchainState.merkleRoot.substring(58);
+        chainSignatureEl.textContent = blockchainState.signature.substring(0, 6) + '...' + blockchainState.signature.substring(58);
+        
+        updateValidationStatus();
+        
+        showToast(isValid ? 'Chain validation successful: All blocks valid' : 'Chain validation failed: Invalid block detected');
+      }, 1500);
+    }
+
+    // Validate token function - Enhanced with proof generation
+    function validateToken() {
+      // Simulate validation delay
+      showToast('Validating token...');
+      const tokenValidationEl = document.getElementById('tokenValidationEl');
+      tokenValidationEl.textContent = '● Validating...';
+      tokenValidationEl.style.color = '#d69e2e';
+      
+      setTimeout(() => {
+        const isValid = Math.random() > 0.1; // 90% chance of being valid
+        tokenState.isValid = isValid;
+        tokenState.verificationStatus = isValid ? 'Verified' : 'Verification Failed';
+        tokenState.signature = generateRandomHash();
+        
+        // Update UI
+        tokenSignatureEl.textContent = tokenState.signature.substring(0, 6) + '...' + tokenState.signature.substring(58);
+        tokenVerificationEl.textContent = tokenState.verificationStatus;
+        
+        if (isValid) {
+          tokenVerificationEl.style.color = '#38a169';
+        } else {
+          tokenVerificationEl.style.color = '#e53e3e';
+        }
+        
+        updateValidationStatus();
+        
+        showToast(isValid ? 'Token validation successful: Contract is verified' : 'Token validation failed: Contract verification failed');
+      }, 1500);
+    }
+
+    // Deploy PKI token function
+    function deployPKIToken() {
+      showToast('Deploying PKI token...');
+      setTimeout(() => {
+        const deployed = Math.random() > 0.05; // 95% success rate
+        if (deployed) {
+          tokenState.contractAddress = generateContractAddress();
+          tokenState.signature = generateRandomHash();
+          
+          // Update UI
+          const shortAddress = tokenState.contractAddress.substring(0, 6) + '...' + tokenState.contractAddress.substring(38);
+          tokenContractAddress.value = tokenState.contractAddress;
+          document.querySelector('code[onclick="copyToClipboard(\'tokenContractAddress\')"]').textContent = shortAddress;
+          
+          showToast('PKI token contract deployed successfully at address: ' + tokenState.contractAddress);
+        } else {
+          showToast('Token deployment failed: Insufficient gas');
+        }
+      }, 2000);
+    }
+
+    // Bridge tokens function
+    function bridgeTokens() {
+      const sourceChain = sourceChainEl.value;
+      const destChain = destChainEl.value;
+      const token = bridgeTokenEl.value;
+      const amount = bridgeAmountEl.value;
+      
+      if (!amount || amount <= 0) {
+        showToast('Please enter a valid amount');
+        return;
+      }
+      
+      if (sourceChain === destChain) {
+        showToast('Source and destination chains must be different');
+        return;
+      }
+      
+      // Check if token is supported on both chains
+      const tokenInfo = supportedTokens.find(t => t.symbol === token);
+      if (!tokenInfo || !tokenInfo.chains.includes(sourceChain) || !tokenInfo.chains.includes(destChain)) {
+        showToast(`${token} is not supported on both selected chains`);
+        return;
+      }
+      
+      // Show bridge status
+      const statusEl = bridgeStatusEl;
+      statusEl.style.display = 'block';
+      statusEl.innerHTML = `
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #2d3748;">Bridge Transaction Initiated</p>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span>From:</span>
+          <span>${sourceChain.toUpperCase()}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span>To:</span>
+          <span>${destChain.toUpperCase()}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span>Token:</span>
+          <span>${token}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span>Amount:</span>
+          <span>${amount} ${token}</span>
+        </div>
+        <div style="margin-top: 15px; padding: 10px; background: #bee3f8; border-radius: 6px;">
+          <p style="margin: 0; color: #2c5282;">Processing bridge transaction...</p>
+        </div>
+      `;
+      
+      // Simulate bridge processing
+      setTimeout(() => {
+        const success = Math.random() > 0.1; // 90% success rate
+        if (success) {
+          statusEl.innerHTML = `
+            <p style="margin: 0 0 10px 0; font-weight: bold; color: #2d3748;">Bridge Transaction Completed</p>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span>Transaction ID:</span>
+              <span style="font-family: monospace;">0x${Math.random().toString(16).substring(2, 10)}...</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span>Status:</span>
+              <span style="color: #38a169; font-weight: bold;">Completed</span>
+            </div>
+            <div style="margin-top: 15px; padding: 10px; background: #c6f6d5; border-radius: 6px;">
+              <p style="margin: 0; color: #276749;">Successfully bridged ${amount} ${token} from ${sourceChain.toUpperCase()} to ${destChain.toUpperCase()}</p>
+            </div>
+          `;
+          
+          // Add to transactions list
+          const newTx = {
+            id: '0x' + Math.random().toString(16).substring(2, 8) + '...2d9e',
+            from: `0x${Math.random().toString(16).substring(2, 8)}...`,
+            to: `0x${Math.random().toString(16).substring(2, 8)}...`,
+            amount: `${amount} ${token}`,
+            status: 'Confirmed'
+          };
+          transactionsList.unshift(newTx);
+          renderTransactions();
+          
+          showToast('Bridge transaction completed successfully');
+        } else {
+          statusEl.innerHTML = `
+            <p style="margin: 0 0 10px 0; font-weight: bold; color: #2d3748;">Bridge Transaction Failed</p>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span>Status:</span>
+              <span style="color: #e53e3e; font-weight: bold;">Failed</span>
+            </div>
+            <div style="margin-top: 15px; padding: 10px; background: #fed7d7; border-radius: 6px;">
+              <p style="margin: 0; color: #9b2c2c;">Bridge transaction failed. Please try again.</p>
+            </div>
+          `;
+          showToast('Bridge transaction failed');
+        }
+      }, 3000);
+    }
+
+    // Toast notification function
+    function showToast(message) {
+      const toast = toastEl;
+      const toastMessage = toastMessageEl;
+      
+      toastMessage.textContent = message;
+      toast.style.display = 'block';
+      
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    }
+
+    // Generate API key function
+    function generateApiKey() {
+      const name = apiKeyNameEl.value;
+      if (!name) {
+        showToast('Please enter a name for your API key');
+        return;
+      }
+      
+      // Generate a random key (in production this would come from server)
+      const randomKey = 'poke_' + Math.random().toString(36).substring(2, 15) + 
+                        Math.random().toString(36).substring(2, 15);
+      
+      apiKeyValueEl.textContent = randomKey;
+      apiKeyResultEl.style.display = 'block';
+      
+      // Clear input
+      apiKeyNameEl.value = '';
+      
+      showToast('API key generated successfully');
+    }
+
+    // Simulate real-time updates
+    setInterval(() => {
+      // Update block height occasionally
+      if (Math.random() > 0.7) {
+        blockchainState.blockHeight += 1;
+        blockHeightEl.textContent = blockchainState.blockHeight;
+      }
+      
+      // Update last block hash
+      if (Math.random() > 0.8) {
+        blockchainState.lastBlockHash = '0x' + Math.random().toString(16).substring(2, 10) + '...';
+        lastHashEl.textContent = blockchainState.lastBlockHash;
+      }
+    }, 5000);
+
+    // Initialize UI on page load
+    document.addEventListener('DOMContentLoaded', initializeUI);
+  </script>
+
+  <style>
+    /* Added cursor pointer for clickable contract address */
+    #tokenContractAddress {
+      cursor: pointer;
+    }
+  </style>
+</div>
+  </body>
+</html>
